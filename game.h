@@ -1,14 +1,18 @@
 #pragma once
 #include <vector>
+#include <iostream>
 
+
+// TODO: make this an overall game class then put tictactoe as a child class
 enum Space {UpLeft, Up, UpRight, Left, Middle, Right, DownLeft, Down, DownRight};
-class Tictactoe
+class Game
 {
-	Tictactoe::Tictactoe()
+	Game::Game()
 	{
 	}
 private:
-	std::vector<int> board_ = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	std::vector<int> board_;
+	int ans;
 public:
 	void PrintBoard(std::vector<int>board_);
 	void EditBoard();
