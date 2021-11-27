@@ -11,11 +11,17 @@ class Game
 	{
 	}
 private:
-	std::vector<int> board_;
+	std::vector<int> Tboard_;
+	std::vector<int> Mboard_;
+	std::vector<int> Bboard_;
 	int ans;
+	bool Pturn = true;
+	int game = 0;
 public:
+	void ChangeGame(int g);
 	void PrintBoard(std::vector<int>board_);
 	void EditBoard();
 	void PlayerTurn();
 	void ComTurn();
+	void ChangeTurn(bool Pturn);
 };
