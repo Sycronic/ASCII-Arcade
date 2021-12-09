@@ -1,3 +1,4 @@
 # ASCII-Arcade
 some simple games to get back into c++
-(change test)
+
+Adding Tic Tac Toe, Blackjack, Coin Flip games.
