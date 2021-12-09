@@ -1,6 +1,6 @@
 #include <iostream>
+#include "tictactoe.h"
 
-// TODO: make tictactoe
 // TODO: make heads/tails
 // TODO: make blackjack
 // TODO: user system
@@ -9,6 +9,8 @@
 
 int main()
 {
-	std::cout << "cmake test \n";
+	Tictactoe game;
+	game.play();
+
 	return 0;
 }

@@ -1,30 +1,12 @@
 #include "game.h"
 
-void Game::PrintBoard(std::vector<int> board_)
+
+void Game::input()
 {
-	for (int i = 0; i < board_.size(); i++)
-		std::cout << board_.at(i) << ' ';
+	std::cin >> ans;
 }
 
 void Game::ChangeGame(int g)
 {
 	game = g;
-}
-
-void Game::EditBoard()
-{
-}
-
-void Game::PlayerTurn()
-
-{
-}
-
-void Game::ComTurn()
-{
-}
-
-void Game::ChangeTurn(bool Pturn)
-{
-	Pturn = !Pturn;
 }
