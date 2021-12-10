@@ -6,7 +6,7 @@ Tictactoe::Tictactoe()
 
 void Tictactoe::play()
 {
-	//TODO:: fix this
+	
 	gLogic(board_);
 }
 					   
@@ -33,7 +33,8 @@ void Tictactoe::gLogic(std::vector<std::vector<int>>& board_)
 		}
 	}
 }
-//init int x
+
+//returns designated X/O or space based on index value of board_ for draw
 char Tictactoe::checkSpace(int x)
 {
 	switch (x)
@@ -44,6 +45,7 @@ char Tictactoe::checkSpace(int x)
 	}
 }
 
+//returns results for checkX, checkY, or checkZ if any are true
 bool Tictactoe::checkifWon(std::vector<std::vector<int>>& board_, int p, int x, int y)
 {
 	int win = p * 3;
@@ -57,12 +59,13 @@ bool Tictactoe::checkifWon(std::vector<std::vector<int>>& board_, int p, int x, 
 	}
 }
 
+//draws play board
 void Tictactoe::Draw(std::vector<std::vector<int>>& board_)
 {
 
 	for (int y = 0; y < 3; y++) {
 		for (int x = 0; x < 3; x++) {
-			std::cout << checkSpace(board_[x][y]) << '|';	//init board_[x][y]
+			std::cout << checkSpace(board_[x][y]) << '|';	
 			if (x == 2) {
 				std::cout << '\n';
 			}
@@ -70,7 +73,8 @@ void Tictactoe::Draw(std::vector<std::vector<int>>& board_)
 	}
 	std::cout << '\n';
 }
-//TODO:: fix this issue where it enters or can't return right (not sure if its because i have the array wrong)
+
+//returns summation for horizontal of last index for 3 in a row and returns results
 int Tictactoe::checkX(std::vector<std::vector<int>>& board_, int x, int y)
 {
 	if (x == 0 || x == 2)
@@ -90,6 +94,7 @@ int Tictactoe::checkX(std::vector<std::vector<int>>& board_, int x, int y)
 	}
 }
 
+//returns summation for vertical of last index for 3 in a row and returns results
 int Tictactoe::checkY(std::vector<std::vector<int>>& board_, int x, int y)
 {
 	if (y == 0 || y == 2)
@@ -108,11 +113,18 @@ int Tictactoe::checkY(std::vector<std::vector<int>>& board_, int x, int y)
 		return board_[x][y] + board_[x][y + 1] + board_[x][y - 1];
 	}
 }
-//not entered
+
+//returns summation for diagnal of last index for 3 in a row and returns results
 int Tictactoe::checkZ(std::vector<std::vector<int>>& board_, int p, int x, int y)
 {
 	if (board_[1][1] == p)
 	{
+		if (x == 1 && y == 1)
+		{
+			//needs to check both ways maybe switch others to this format?
+			if ((p == board_[0][0] && p == board_[2][2]) || (p == board_[0][2] && p == board_[2][0]))
+				return p * 3;
+		}
 		if (x < 1) {
 			if (y < 1)
 			{
@@ -153,6 +165,7 @@ int Tictactoe::checkZ(std::vector<std::vector<int>>& board_, int p, int x, int y
 	}
 }
 
+//takes player input converts it to xy, and places on board_
 void Tictactoe::playerInput(std::vector<std::vector<int>>& board_)
 {
 	std::cout << "enter your placement\n";
@@ -162,6 +175,7 @@ void Tictactoe::playerInput(std::vector<std::vector<int>>& board_)
 	convertXY(c);
 }
 
+//sets player input onto the board;
 void Tictactoe::inputToV(std::vector<std::vector<int>>& board_, int p, int c)
 {
 	switch (c)
@@ -178,7 +192,8 @@ void Tictactoe::inputToV(std::vector<std::vector<int>>& board_, int p, int c)
 	}
 }
 
-void Tictactoe::convertXY(int p)
+//converts the player input to x, y cordinates for board_
+void Tictactoe::convertXY(int p) 
 {
 	switch (p)
 	{
@@ -194,7 +209,8 @@ void Tictactoe::convertXY(int p)
 	}
 }
 
-void Tictactoe::drawGuide()
+//draws the placement guide
+void Tictactoe::drawGuide() 
 {
 	std::cout << "0|1|2" << '\n' << "3|4|5" << '\n' << "6|7|8" << '\n' << '\n';
 }
