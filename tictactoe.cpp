@@ -2,7 +2,6 @@
 
 Tictactoe::Tictactoe()
 {
-		board_ = { 0 };
 }
 
 void Tictactoe::play()
@@ -10,12 +9,14 @@ void Tictactoe::play()
 	//TODO:: fix this
 	gLogic(board_);
 }
-
+					   
 void Tictactoe::gLogic(std::vector<std::vector<int>>& board_)
 {
 	while (!gameOver)
 	{
+		Draw(board_);
 		playerInput(board_);
+
 		Draw(board_);
 
 		if (checkifWon(board_, -3, x, y))
@@ -31,7 +32,7 @@ void Tictactoe::gLogic(std::vector<std::vector<int>>& board_)
 		}
 	}
 }
-
+//init int x
 char Tictactoe::checkSpace(int x)
 {
 	switch (x)
@@ -61,7 +62,7 @@ void Tictactoe::Draw(std::vector<std::vector<int>>& board_)
 
 	for (int x = 0; x < 3; x++) {
 		for (int y = 0; y < 3; y++) {
-			std::cout << checkSpace(board_[x][y]) << '|';
+			std::cout << checkSpace(board_[x][y]) << '|';	//init board_[x][y]
 			if (y == 2) {
 				std::cout << '\n';
 			}

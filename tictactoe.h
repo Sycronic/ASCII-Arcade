@@ -9,7 +9,13 @@ public:
 	
 
 private:
-	std::vector<std::vector<int>>* board_;
+	std::vector<std::vector<int>> board_
+	{
+	   {0, 0, 0},
+	   {0, 0, 0},
+	   {0, 0, 0}
+
+	};;
 	bool gameOver = false;
 	int x;
 	int y;
