@@ -30,4 +30,5 @@ private:
 	void playerInput(std::vector<std::vector<int>>& board_);
 	void inputToV(std::vector<std::vector<int>>& board_, int p, int c);
 	void convertXY(int p);
+	void drawGuide();
 };

@@ -14,7 +14,8 @@ void Tictactoe::gLogic(std::vector<std::vector<int>>& board_)
 {
 	while (!gameOver)
 	{
-		Draw(board_);
+
+		drawGuide();
 		playerInput(board_);
 
 		Draw(board_);
@@ -46,7 +47,7 @@ char Tictactoe::checkSpace(int x)
 bool Tictactoe::checkifWon(std::vector<std::vector<int>>& board_, int p, int x, int y)
 {
 	int win = p * 3;
-	if (win == checkX(board_, x, y) || checkY(board_, x, y) || checkZ(board_, p, x, y))
+	if (win == checkX(board_, x, y) || win == checkY(board_, x, y) || win == checkZ(board_, p, x, y))
 	{
 		return true;
 	}
@@ -58,22 +59,21 @@ bool Tictactoe::checkifWon(std::vector<std::vector<int>>& board_, int p, int x, 
 
 void Tictactoe::Draw(std::vector<std::vector<int>>& board_)
 {
-	std::cout << "0|1|2" << '\n' << "3|4|5|" << '\n' << "6|7|8"<< '\n' << '\n';
 
-	for (int x = 0; x < 3; x++) {
-		for (int y = 0; y < 3; y++) {
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
 			std::cout << checkSpace(board_[x][y]) << '|';	//init board_[x][y]
-			if (y == 2) {
+			if (x == 2) {
 				std::cout << '\n';
 			}
 		}
 	}
 	std::cout << '\n';
 }
-
+//TODO:: fix this issue where it enters or can't return right (not sure if its because i have the array wrong)
 int Tictactoe::checkX(std::vector<std::vector<int>>& board_, int x, int y)
 {
-	if (x == 0 || 2) 
+	if (x == 0 || x == 2)
 	{
 		if (x == 0)
 		{
@@ -92,7 +92,7 @@ int Tictactoe::checkX(std::vector<std::vector<int>>& board_, int x, int y)
 
 int Tictactoe::checkY(std::vector<std::vector<int>>& board_, int x, int y)
 {
-	if (y == 0 || 2)
+	if (y == 0 || y == 2)
 	{
 		if (y == 0)
 		{
@@ -108,7 +108,7 @@ int Tictactoe::checkY(std::vector<std::vector<int>>& board_, int x, int y)
 		return board_[x][y] + board_[x][y + 1] + board_[x][y - 1];
 	}
 }
-
+//not entered
 int Tictactoe::checkZ(std::vector<std::vector<int>>& board_, int p, int x, int y)
 {
 	if (board_[1][1] == p)
@@ -192,6 +192,11 @@ void Tictactoe::convertXY(int p)
 	case 7: x = 1; y = 2; break;
 	case 8: x = 2; y = 2; break;
 	}
+}
+
+void Tictactoe::drawGuide()
+{
+	std::cout << "0|1|2" << '\n' << "3|4|5" << '\n' << "6|7|8" << '\n' << '\n';
 }
 
 
