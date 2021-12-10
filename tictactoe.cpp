@@ -58,7 +58,7 @@ bool Tictactoe::checkifWon(std::vector<std::vector<int>>& board_, int p, int x, 
 
 void Tictactoe::Draw(std::vector<std::vector<int>>& board_)
 {
-	std::cout << "0|1|2" << '\n' << "3|4|5|" << '\n' << "6|7|8";
+	std::cout << "0|1|2" << '\n' << "3|4|5|" << '\n' << "6|7|8"<< '\n' << '\n';
 
 	for (int x = 0; x < 3; x++) {
 		for (int y = 0; y < 3; y++) {
@@ -68,6 +68,7 @@ void Tictactoe::Draw(std::vector<std::vector<int>>& board_)
 			}
 		}
 	}
+	std::cout << '\n';
 }
 
 int Tictactoe::checkX(std::vector<std::vector<int>>& board_, int x, int y)
@@ -80,7 +81,7 @@ int Tictactoe::checkX(std::vector<std::vector<int>>& board_, int x, int y)
 		}
 		else
 		{
-			return board_[x][y] + board_[x - 1][y] + board_[x - 2][y];
+			return (board_[x][y] + board_[x - 1][y] + board_[x - 2][y]);
 		}
 	}
 	else
@@ -157,23 +158,23 @@ void Tictactoe::playerInput(std::vector<std::vector<int>>& board_)
 	std::cout << "enter your placement\n";
 	int c;
 	std::cin >> c;
-	inputToV(board_, c);
+	inputToV(board_, -3, c);
 	convertXY(c);
 }
 
-void Tictactoe::inputToV(std::vector<std::vector<int>>& board_, int p)
+void Tictactoe::inputToV(std::vector<std::vector<int>>& board_, int p, int c)
 {
-	switch (p)
+	switch (c)
 	{
-	case 0: board_[0][0] = p;
-	case 1: board_[1][0] = p;
-	case 2: board_[2][0] = p;
-	case 3: board_[0][1] = p;
-	case 4: board_[1][1] = p;
-	case 5: board_[2][1] = p;
-	case 6: board_[0][2] = p;
-	case 7: board_[1][2] = p;
-	case 8: board_[2][2] = p;
+	case 0: board_[0][0] = p; break;
+	case 1: board_[1][0] = p; break;
+	case 2: board_[2][0] = p; break;
+	case 3: board_[0][1] = p; break;
+	case 4: board_[1][1] = p; break;
+	case 5: board_[2][1] = p; break;
+	case 6: board_[0][2] = p; break;
+	case 7: board_[1][2] = p; break;
+	case 8: board_[2][2] = p; break;
 	}
 }
 
@@ -181,15 +182,15 @@ void Tictactoe::convertXY(int p)
 {
 	switch (p)
 	{
-	case 0: x = 0; y = 0;
-	case 1: x = 1; y = 0;
-	case 2: x = 2; y = 0;
-	case 3: x = 0; y = 1;
-	case 4: x = 1; y = 1;
-	case 5: x = 2; y = 1;
-	case 6: x = 0; y = 2;
-	case 7: x = 1; y = 2;
-	case 8: x = 2; y = 2;
+	case 0: x = 0; y = 0; break;
+	case 1: x = 1; y = 0; break;
+	case 2: x = 2; y = 0; break;
+	case 3: x = 0; y = 1; break;
+	case 4: x = 1; y = 1; break;
+	case 5: x = 2; y = 1; break;
+	case 6: x = 0; y = 2; break;
+	case 7: x = 1; y = 2; break;
+	case 8: x = 2; y = 2; break;
 	}
 }
 
