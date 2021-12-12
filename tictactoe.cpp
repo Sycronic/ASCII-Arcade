@@ -10,6 +10,23 @@ void Tictactoe::play()
 	gLogic(board_);
 }
 					   
+void Tictactoe::cpuLogic(std::vector<std::vector<int>>& board_)
+{
+	//use checksx/y/z to see which has higher number to determine where to place O
+	if (maxcheckZ(board_, x, y) > maxcheckX(board_, x, y) && maxcheckZ(board_, x, y) > maxcheckY(board_, x, y))
+	{
+		board_[zx][zy] = -4;
+	}
+	if(maxcheckX(board_, x, y) > maxcheckY(board_, x, y))
+	{
+		board_[xx][xy] = -4;
+	}
+	else
+	{
+		board_[yx][yy] = -4;
+	}
+}
+
 void Tictactoe::gLogic(std::vector<std::vector<int>>& board_)
 {
 	while (!gameOver)
@@ -25,6 +42,9 @@ void Tictactoe::gLogic(std::vector<std::vector<int>>& board_)
 			gameOver = true;
 			std::cout << "\nGame Over \n";
 		}
+
+		cpuLogic(board_);
+		Draw(board_);
 
 		if (checkifWon(board_, -4, x, y))
 		{
@@ -74,43 +94,149 @@ void Tictactoe::Draw(std::vector<std::vector<int>>& board_)
 	std::cout << '\n';
 }
 
-//returns summation for horizontal of last index for 3 in a row and returns results
+//returns summation for horizontal of last index for 3 in a row and returns results (also increases value of spaces needed to win)
 int Tictactoe::checkX(std::vector<std::vector<int>>& board_, int x, int y)
 {
 	if (x == 0 || x == 2)
 	{
 		if (x == 0)
-		{
+		{	
+			addSpaceVal(board_, x + 1, y);
+			addSpaceVal(board_, x + 2, y);
 			return board_[x][y] + board_[x + 1][y] + board_[x + 2][y];
 		}
 		else
 		{
+			addSpaceVal(board_, x -1, y);
+			addSpaceVal(board_, x - 2, y); 
 			return (board_[x][y] + board_[x - 1][y] + board_[x - 2][y]);
 		}
 	}
 	else
 	{
+		addSpaceVal(board_, x - 1, y);
+		addSpaceVal(board_, x + 1, y);
 		return board_[x][y] + board_[x - 1][y] + board_[x + 1][y];
 	}
 }
 
-//returns summation for vertical of last index for 3 in a row and returns results
+int Tictactoe::maxcheckX(std::vector<std::vector<int>>& board_, int x, int y)
+{
+	if (x == 0 || x == 2)
+	{
+		if (x == 0)
+		{
+			if (board_[x + 1][y] > board_[x + 2][y])
+			{
+				xx = x + 1; xy = y;
+				return board_[x + 1][y];
+			}
+			else
+			{
+				xx = x + 2; xy = y;
+				return board_[x + 2][y];
+			}
+		}
+		else
+		{
+			if (board_[x - 1][y] > board_[x - 2][y])
+			{
+				xx = x - 1; xy = y;
+				return board_[x - 1][y];
+			}
+			else
+			{
+				xx = x - 2; xy = y;
+				return board_[x - 2][y];
+			}
+		}
+	}
+	else
+	{
+		if (board_[x - 1][y] > board_[x + 1][y])
+		{
+			xx = x - 1; xy = y;
+			return board_[x - 1][y];
+		}
+		else
+		{
+			//redundant? 
+			xx = x + 1; xy = y;
+			return board_[x + 1][y];
+		}
+	}
+}
+
+//returns summation for vertical of last index for 3 in a row and returns results (also increases value of spaces needed to win)
 int Tictactoe::checkY(std::vector<std::vector<int>>& board_, int x, int y)
 {
 	if (y == 0 || y == 2)
 	{
 		if (y == 0)
 		{
+			addSpaceVal(board_, x, y+1);
+			addSpaceVal(board_, x, y+2); 
 			return board_[x][y] + board_[x][y + 1] + board_[x][y + 2];
 		}
 		else
 		{
+			addSpaceVal(board_, x, y-1);
+			addSpaceVal(board_, x, y-2);
 			return board_[x][y] + board_[x][y - 1] + board_[x][y - 2];
 		}
 	}
 	else
-	{
+	{	
+		addSpaceVal(board_, x, y+1);
+		addSpaceVal(board_, x, y-1);
 		return board_[x][y] + board_[x][y + 1] + board_[x][y - 1];
+	}
+}
+
+int Tictactoe::maxcheckY(std::vector<std::vector<int>>& board_, int x, int y)
+{
+	if (y == 0 || y == 2)
+	{
+		if (y == 0)
+		{
+			if (board_[x][y + 1] > board_[x][y + 2])
+			{
+				yx = x; yy = y + 1;
+				return board_[x][y + 1];
+			}
+			else
+			{
+				yx = x; yy = y + 2;
+				return board_[x][y + 2];
+			}
+			
+		}
+		else
+		{
+			if (board_[x][y - 1] > board_[x][y - 2])
+			{
+				yx = x; yy = y - 1;
+				return board_[x][y - 1];
+			}
+			else
+			{
+				yx = x; yy = y - 2;
+				return board_[x][y - 2];
+			}
+		}
+	}
+	else
+	{
+		if (board_[x][y + 1] > board_[x][y - 1])
+		{
+			yx = x; yy = y - 1;
+			return board_[x][y + 1];
+		}
+		else
+		{
+			yx = x; yy = y - 1;
+			return board_[x][y - 1];
+		}
 	}
 }
 
@@ -128,10 +254,12 @@ int Tictactoe::checkZ(std::vector<std::vector<int>>& board_, int p, int x, int y
 		if (x < 1) {
 			if (y < 1)
 			{
+				addSpaceVal(board_, 2, 2);
 				return board_[x][y] + board_[2][2] + p;
 			}
 			if (y > 1)
 			{
+				addSpaceVal(board_, 2, 0);
 				return board_[x][y] + board_[2][0] + p;
 			}
 			else
@@ -143,10 +271,12 @@ int Tictactoe::checkZ(std::vector<std::vector<int>>& board_, int p, int x, int y
 		{
 			if (y < 1)
 			{
+				addSpaceVal(board_, 0, 2);
 				return board_[x][y] + board_[0][2] + p;
 			}
 			if (y > 1)
 			{
+				addSpaceVal(board_, 0, 0);
 				return board_[x][y] + board_[0][0] + p;
 			}
 			else
@@ -163,6 +293,111 @@ int Tictactoe::checkZ(std::vector<std::vector<int>>& board_, int p, int x, int y
 	{
 		return 0;
 	}
+}
+
+int Tictactoe::maxcheckZ(std::vector<std::vector<int>>& board_, int x, int y)
+{
+	if (x == 1 && y == 1)
+	{
+		//needs to check both ways maybe switch others to this format?
+		if ((board_[0][0] + board_[2][2]) > (board_[0][2] + board_[2][0]))
+		{
+			if (board_[0][0] > board_[2][2])
+			{
+				zx = 0; zy = 0;
+				return board_[0][0];
+			}
+			else
+			{
+				zx = 2; zy = 2;
+				return board_[2][2];
+			}
+		}
+		else
+		{
+			if (board_[0][2] > board_[2][0])
+			{
+				zx = 0; zy = 2;
+				return board_[0][2];
+			}
+			else
+			{
+				zx = 2; zy = 0;
+				return board_[2][0];
+			}
+		}
+	}
+	if (x < 1) {
+		if (y < 1)
+		{
+			if (board_[2][2] > board_[1][1])
+			{
+				zx = 2; zy = 2;
+				return board_[2][2];
+			}
+			else
+			{
+				zx = 1; zy = 1;
+				return board_[1][1];
+			}
+
+		}
+		if (y > 1)
+		{
+			if (board_[2][0] > board_[1][1])
+			{
+				zx = 2; zy = 0;
+				return board_[2][0];
+			}
+			else
+			{
+				zx = 1; zy = 1;
+				return board_[1][1];
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	if (x > 1)
+	{
+		if (y < 1)
+		{
+			if (board_[0][2] > board_[1][1])
+			{
+				zx = 0; zy = 2;
+				return board_[0][2];
+			}
+			else
+			{
+				zx = 1; zy = 1;
+				return board_[1][1];
+			}
+		}
+		if (y > 1)
+		{
+			if (board_[0][0] > board_[1][1])
+			{
+				zx = 0; zy = 0;
+				return board_[0][0];
+			}
+			else
+			{
+				zx = 1; zy = 1;
+				return board_[1][1];
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else
+	{
+		return 0;
+	}
+
 }
 
 //takes player input converts it to xy, and places on board_
@@ -213,6 +448,14 @@ void Tictactoe::convertXY(int p)
 void Tictactoe::drawGuide() 
 {
 	std::cout << "0|1|2" << '\n' << "3|4|5" << '\n' << "6|7|8" << '\n' << '\n';
+}
+
+void Tictactoe::addSpaceVal(std::vector<std::vector<int>>& board_, int x, int y)
+{
+	if (board_[x][y] > 0)
+	{
+		board_[x][y]++;
+	}
 }
 
 
