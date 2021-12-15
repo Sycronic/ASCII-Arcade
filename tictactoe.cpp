@@ -13,17 +13,38 @@ void Tictactoe::play()
 void Tictactoe::cpuLogic(std::vector<std::vector<int>>& board_)
 {
 	//use checksx/y/z to see which has higher number to determine where to place O
-	if (maxcheckZ(board_, x, y) > maxcheckX(board_, x, y) && maxcheckZ(board_, x, y) > maxcheckY(board_, x, y))
+	if (maxcheckZ(board_, x, y) > maxcheckX(board_, x, y) && maxcheckZ(board_, x, y) > maxcheckY(board_, x, y) && board_[zx][zy] > 0)
 	{
+		x = zx;	y = zy;
 		board_[zx][zy] = -4;
 	}
-	if(maxcheckX(board_, x, y) > maxcheckY(board_, x, y))
+	else if(maxcheckX(board_, x, y) > maxcheckY(board_, x, y) && board_[xx][xy] > 0)
 	{
+		x = xx;	y = xy;
 		board_[xx][xy] = -4;
+	}
+	else if (maxcheckY(board_, x, y) > 0 && board_[yx][yy] > 0)
+	{
+		x = yx;	y = yy;
+		board_[yx][yy] = -4;
 	}
 	else
 	{
-		board_[yx][yy] = -4;
+		if (maxcheckZ(board_, x, y) > maxcheckX(board_, x, y) && maxcheckZ(board_, x, y) > 0 && board_[zx][zy] > 0)
+		{
+			x = zx;	y = zy;
+			board_[zx][zy] = -4;
+		}
+		else if (board_[xx][xy] > 0)
+		{
+			x = xx;	y = xy;
+			board_[xx][xy] = -4;
+		}
+		else
+		{
+			gameOver = true;
+			std::cout << "\nGame Over You Tie \n\n";
+		}
 	}
 }
 
@@ -40,7 +61,7 @@ void Tictactoe::gLogic(std::vector<std::vector<int>>& board_)
 		if (checkifWon(board_, -3, x, y))
 		{
 			gameOver = true;
-			std::cout << "\nGame Over \n";
+			std::cout << "\nGame Over You Win \n\n";
 		}
 
 		cpuLogic(board_);
@@ -49,7 +70,7 @@ void Tictactoe::gLogic(std::vector<std::vector<int>>& board_)
 		if (checkifWon(board_, -4, x, y))
 		{
 			gameOver = true;
-			std::cout << "\nGame Over \n";
+			std::cout << "\nGame Over You Lose\n\n";
 		}
 	}
 }
@@ -242,7 +263,7 @@ int Tictactoe::maxcheckY(std::vector<std::vector<int>>& board_, int x, int y)
 
 //returns summation for diagnal of last index for 3 in a row and returns results
 int Tictactoe::checkZ(std::vector<std::vector<int>>& board_, int p, int x, int y)
-{
+{	//TODO:: check this for issue with cpu win
 	if (board_[1][1] == p)
 	{
 		if (x == 1 && y == 1)

@@ -13,9 +13,9 @@ public:
 private:
 	std::vector<std::vector<int>> board_
 	{
-	   {2, 1, 2},
-	   {1, 3, 1},
-	   {2, 1, 2}
+	   {3, 1, 3},
+	   {1, 10, 1},
+	   {3, 1, 3}
 
 	};
 	bool gameOver = false;
