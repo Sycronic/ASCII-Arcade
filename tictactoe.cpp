@@ -64,13 +64,15 @@ void Tictactoe::gLogic(std::vector<std::vector<int>>& board_)
 			std::cout << "\nGame Over You Win \n\n";
 		}
 
-		cpuLogic(board_);
-		Draw(board_);
+		if (!gameOver) {
+			cpuLogic(board_);
+			Draw(board_);
 
-		if (checkifWon(board_, -4, x, y))
-		{
-			gameOver = true;
-			std::cout << "\nGame Over You Lose\n\n";
+			if (checkifWon(board_, -4, x, y))
+			{
+				gameOver = true;
+				std::cout << "\nGame Over You Lose\n\n";
+			}
 		}
 	}
 }
